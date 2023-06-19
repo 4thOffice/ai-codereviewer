@@ -218,10 +218,10 @@ function main() {
             });
 		console.log("diff url: -------------------------------------------------  " + response.data.diff_url)
             diff = response.data.diff_url
-                ? yield octokit
-                    .request({ url: response.data.diff_url })
-                    .then((res) => res.data)
-                : null;
+            yield octokit
+                .request({ url: response.data.diff_url })
+                .then((res) => res.data)
+//                 : null;
 	    console.log("------------------------------------------------- after diff.........")
         }
         else {
