@@ -207,6 +207,7 @@ function main() {
             diff = yield getDiff(prDetails.owner, prDetails.repo, prDetails.pull_number);
         }
         else if (eventData.action === "synchronize") {
+	    console.log("sync --------------------------------------------------------")
             const newBaseSha = eventData.before;
             const newHeadSha = eventData.after;
             const response = yield octokit.repos.compareCommits({
@@ -217,6 +218,7 @@ function main() {
             });
 		console.log("diff url: -------------------------------------------------  " + response.data.diff_url)
             diff = response.data.diff_url
+		console.log("diff -------------------------------------------:", diff)
                 ? yield octokit
                     .request({ url: response.data.diff_url })
                     .then((res) => res.data)
