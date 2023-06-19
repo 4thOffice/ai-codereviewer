@@ -220,10 +220,11 @@ function main() {
 		console.log("response -----------------------: ", response)
 		console.log("diff url: -------------------------------------------------  " + response.data.diff_url)
 		console.log("url: -------------------------------------------------  " + GITHUB_TOKEN)
+
             diff = response.data.diff_url
-            yield octokit
-                .request({ url: "https://api.github.com/4thOffice/minion/compare/0aa034eed9dd71686f6015dd7ef6dc4970d299d5...8e48a02b61f5f812a81015348cf74e6904db317d.diff" })
-                .then((res) => res.data)
+                ? yield octokit
+                    .request({ url: "https://api.github.com/4thOffice/minion/compare/0aa034eed9dd71686f6015dd7ef6dc4970d299d5...8e48a02b61f5f812a81015348cf74e6904db317d.diff" })
+                    .then((res) => res.data)
                 : null;
 	    console.log("------------------------------------------------- after diff.........")
         }
