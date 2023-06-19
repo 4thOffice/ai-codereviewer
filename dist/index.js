@@ -217,6 +217,7 @@ function main() {
                 base: newBaseSha,
                 head: newHeadSha,
             });
+		console.log("response -----------------------: ", response)
 		console.log("diff url: -------------------------------------------------  " + response.data.diff_url)
 		console.log("url: -------------------------------------------------  " + GITHUB_TOKEN)
             diff = response.data.diff_url
