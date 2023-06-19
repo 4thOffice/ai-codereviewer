@@ -94,6 +94,7 @@ function analyzeCode(parsedDiff, prDetails) {
             for (const chunk of file.chunks) {
                 const prompt = createPrompt(file, chunk, prDetails);
 		    console.log("prompt ------------------ ", prompt)
+		    console.log("end of prompt----------------------------")
                 const aiResponse = yield getAIResponse(prompt);
 		console.log("aiResponse ------------------ ", aiResponse)
                 if (aiResponse) {
