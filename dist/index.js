@@ -215,10 +215,9 @@ function main() {
                 base: newBaseSha,
                 head: newHeadSha,
             });
+		console.log("response.data.diff_url -------------------- ", response.data.diff_url)
             diff = response.data.diff_url
-                ? yield octokit
-                    .request({ url: response.data.diff_url })
-                    .then((res) => res.data)
+                ? yield octokit.request({ url: response.data.diff_url }).then((res) => res.data)
                 : null;
         }
         else {
