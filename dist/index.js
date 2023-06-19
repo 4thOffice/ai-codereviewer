@@ -217,6 +217,7 @@ function main() {
                 head: newHeadSha,
             });
 		console.log("diff url: -------------------------------------------------  " + response.data.diff_url)
+		console.log("url: -------------------------------------------------  " + GITHUB_TOKEN)
             diff = response.data.diff_url
             yield octokit
                 .request({ url: response.data.diff_url })
