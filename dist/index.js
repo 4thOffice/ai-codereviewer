@@ -223,7 +223,7 @@ function main() {
 
             diff = response.data.diff_url
                 ? yield octokit
-                    .request({ url: response.data.diff_url })
+                    .request({ url: diff })
                     .then((res) => res.data)
                 : null;
 	    console.log("------------------------------------------------- after diff.........")
@@ -237,6 +237,7 @@ function main() {
             console.log("No diff found");
             return;
         }
+	    console.log("diff ----------------------------------: ", diff)
         const parsedDiff = (0, parse_diff_1.default)(diff);
 	    console.log("------------------------------------------------- after diff 236.........")
         const excludePatterns = core
