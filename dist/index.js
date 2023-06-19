@@ -221,16 +221,19 @@ function main() {
                     .request({ url: response.data.diff_url })
                     .then((res) => res.data)
                 : null;
+	    console.log("------------------------------------------------- after diff.........")
         }
         else {
             console.log("Unsupported event:", process.env.GITHUB_EVENT_NAME);
             return;
         }
         if (!diff) {
+		console.log("------------------------------------------------- after diff 231.........")
             console.log("No diff found");
             return;
         }
         const parsedDiff = (0, parse_diff_1.default)(diff);
+	    console.log("------------------------------------------------- after diff 236.........")
         const excludePatterns = core
             .getInput("exclude")
             .split(",")
