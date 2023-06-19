@@ -223,7 +223,7 @@ function main() {
 
             diff = response.data.diff_url
                 ? yield octokit
-                    .request({ url: diff })
+                    .request({ url: response.data.diff_url })
                     .then((res) => res.data)
                 : null;
 	    console.log("------------------------------------------------- after diff.........")
@@ -250,6 +250,7 @@ function main() {
         if (comments.length > 0) {
             yield createReviewComment(prDetails.owner, prDetails.repo, prDetails.pull_number, comments);
         }
+	    console.log("comments ------------------------------------- : ", comments)
     });
 }
 main().catch((error) => {
