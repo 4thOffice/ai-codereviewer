@@ -94,6 +94,7 @@ function analyzeCode(parsedDiff, prDetails) {
             for (const chunk of file.chunks) {
                 const prompt = createPrompt(file, chunk, prDetails);
                 const aiResponse = yield getAIResponse(prompt);
+		console.log("aiResponse ------------------ ", aiResponse)
                 if (aiResponse) {
                     const newComments = createComment(file, chunk, aiResponse);
                     if (newComments) {
@@ -153,7 +154,7 @@ function getAIResponse(prompt) {
         const queryConfig = {
             model: "gpt-3.5-turbo",
             temperature: 0.2,
-            max_tokens: 700,
+            max_tokens: 2048,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
