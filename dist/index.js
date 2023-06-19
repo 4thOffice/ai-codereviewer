@@ -151,7 +151,7 @@ function getAIResponse(prompt) {
     var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         const queryConfig = {
-            model: "gpt-3.5-turbo",
+            model: "gpt-4",
             temperature: 0.2,
             max_tokens: 700,
             top_p: 1,
@@ -203,12 +203,10 @@ function main() {
         const prDetails = yield getPRDetails();
         let diff;
         const eventData = JSON.parse((0, fs_1.readFileSync)((_a = process.env.GITHUB_EVENT_PATH) !== null && _a !== void 0 ? _a : "", "utf8"));
-	    console.log("eventData.action ------------------------ : ", eventData.action)
         if (eventData.action === "opened") {
             diff = yield getDiff(prDetails.owner, prDetails.repo, prDetails.pull_number);
         }
         else if (eventData.action === "synchronize") {
-	    console.log("sync --------------------------------------------------------")
             const newBaseSha = eventData.before;
             const newHeadSha = eventData.after;
             const response = yield octokit.repos.compareCommits({
@@ -217,29 +215,21 @@ function main() {
                 base: newBaseSha,
                 head: newHeadSha,
             });
-		console.log("response -----------------------: ", response)
-		console.log("diff url: -------------------------------------------------  " + response.data.diff_url)
-		console.log("url: -------------------------------------------------  " + GITHUB_TOKEN)
-
             diff = response.data.diff_url
                 ? yield octokit
-                    .request({ url: diff })
+                    .request({ url: response.data.diff_url })
                     .then((res) => res.data)
                 : null;
-	    console.log("------------------------------------------------- after diff.........")
         }
         else {
             console.log("Unsupported event:", process.env.GITHUB_EVENT_NAME);
             return;
         }
         if (!diff) {
-		console.log("------------------------------------------------- after diff 231.........")
             console.log("No diff found");
             return;
         }
-	    console.log("diff ----------------------------------: ", diff)
         const parsedDiff = (0, parse_diff_1.default)(diff);
-	    console.log("------------------------------------------------- after diff 236.........")
         const excludePatterns = core
             .getInput("exclude")
             .split(",")
@@ -251,7 +241,6 @@ function main() {
         if (comments.length > 0) {
             yield createReviewComment(prDetails.owner, prDetails.repo, prDetails.pull_number, comments);
         }
-	    console.log("comments ------------------------------------- : ", comments)
     });
 }
 main().catch((error) => {
